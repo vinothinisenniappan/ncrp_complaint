@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Cyber Crime Reporting Portal - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb-section">
+                <a href="{{ url_for('index') }}">Home</a> > Dashboard
+            </div>
+
+            <h2 style="color: #1e3c72; font-weight: 700; margin-bottom: 30px;">📊 Admin Dashboard</h2>
+
+            <!-- Statistics Cards -->
+            <div class="row mb-4" id="statsCards">
+                <div class="col-md-3 mb-3">
+                    <div class="card text-white" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Complaints</h5>
+                            <h2 class="mb-0" id="totalComplaints">-</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card text-white" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                        <div class="card-body">
+                            <h5 class="card-title">High Value Cases</h5>
+                            <h2 class="mb-0" id="highValueCount">-</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card text-white" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Amount</h5>
+                            <h2 class="mb-0" id="totalAmount">-</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card text-white" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">
+                        <div class="card-body">
+                            <h5 class="card-title">Status</h5>
+                            <h6 class="mb-0" id="fileStatus">-</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Complaints by Crime Type</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="crimeTypeChart">
+                                <p class="text-muted">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Complaints by Status</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="statusChart">
+                                <p class="text-muted">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions Section -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <a href="{{ url_for('download_excel') }}" class="btn btn-success w-100">
+                                📥 Download Master Register (Excel)
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <a href="{{ url_for('index') }}" class="btn btn-primary w-100">
+                                📁 Upload New File
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <a href="{{ url_for('complaint_form') }}" class="btn btn-outline-primary w-100">
+                                📝 Submit Demo Complaint
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information Section -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">ℹ️ About the Excel Register</h5>
+                </div>
+                <div class="card-body">
+                    <p>The generated Excel file contains multiple sheets:</p>
+                    <ul>
+                        <li><strong>Master_Sheet:</strong> All complaints in one place</li>
+                        <li><strong>UPI_Fraud, Bank_Fraud, Social_Media, etc.:</strong> Categorized by crime type</li>
+                        <li><strong>High_Value_Cases:</strong> Cases above ₹50,000</li>
+                        <li><strong>Possible_Duplicates:</strong> Flagged duplicate/linked complaints</li>
+                    </ul>
+                    <p class="text-muted mb-0">
+                        <small>Each complaint appears in the master sheet and relevant category sheets. 
+                        This is not duplication - it's multiple views of the same data for different investigation needs.</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container-fluid">
+            <p>National Cyber Crime Reporting Portal - Local Demonstration System | Not connected to real NCRP portal</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Load statistics
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const stats = await response.json();
+                
+                // Update cards
+                document.getElementById('totalComplaints').textContent = stats.total_complaints || 0;
+                document.getElementById('highValueCount').textContent = stats.high_value_count || 0;
+                document.getElementById('totalAmount').textContent = '₹' + (stats.total_amount || 0).toLocaleString('en-IN');
+                document.getElementById('fileStatus').textContent = stats.file_exists ? 'Active' : 'No Data';
+                
+                // Update charts
+                updateCrimeTypeChart(stats.by_crime_type || {});
+                updateStatusChart(stats.by_status || {});
+            } catch (error) {
+                console.error('Error loading stats:', error);
+                document.getElementById('totalComplaints').textContent = 'Error';
+            }
+        }
+        
+        function updateCrimeTypeChart(data) {
+            const container = document.getElementById('crimeTypeChart');
+            if (Object.keys(data).length === 0) {
+                container.innerHTML = '<p class="text-muted">No data available</p>';
+                return;
+            }
+            
+            let html = '<ul class="list-unstyled">';
+            for (const [type, count] of Object.entries(data)) {
+                html += `<li class="mb-2">
+                    <div class="d-flex justify-content-between">
+                        <span>${type}</span>
+                        <span class="badge bg-primary">${count}</span>
+                    </div>
+                </li>`;
+            }
+            html += '</ul>';
+            container.innerHTML = html;
+        }
+        
+        function updateStatusChart(data) {
+            const container = document.getElementById('statusChart');
+            if (Object.keys(data).length === 0) {
+                container.innerHTML = '<p class="text-muted">No data available</p>';
+                return;
+            }
+            
+            let html = '<ul class="list-unstyled">';
+            for (const [status, count] of Object.entries(data)) {
+                html += `<li class="mb-2">
+                    <div class="d-flex justify-content-between">
+                        <span>${status}</span>
+                        <span class="badge bg-success">${count}</span>
+                    </div>
+                </li>`;
+            }
+            html += '</ul>';
+            container.innerHTML = html;
+        }
+        
+        // Load stats on page load
+        document.addEventListener('DOMContentLoaded', loadStats);
+        
+        // Refresh stats every 30 seconds
+        setInterval(loadStats, 30000);
+    </script>
+</body>
+</html>

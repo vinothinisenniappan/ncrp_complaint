@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Cyber Crime Reporting Portal - File Upload</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb-section">
+                <a href="{{ url_for('index') }}">Home</a> > Upload Files
+            </div>
+
+            <!-- Demo Notice -->
+            <div class="demo-notice">
+                ⚠️ <strong>DEMONSTRATION SYSTEM:</strong> This is a local demonstration system. It does NOT access the real NCRP portal. All data is processed locally.
+            </div>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else 'warning' if category == 'warning' else 'success' }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="two-column-layout">
+                <!-- Left Panel - Information -->
+                <div class="checklist-panel">
+                    <h3 class="checklist-title">📋 File Upload Guidelines</h3>
+                    <p class="checklist-instruction">Please ensure your file meets the following requirements:</p>
+                    
+                    <div class="checklist-section">
+                        <div class="checklist-section-title">Supported File Formats:</div>
+                        <div class="checklist-item">CSV files (.csv)</div>
+                        <div class="checklist-item">Excel files (.xlsx, .xls)</div>
+                        <div class="checklist-item">PDF files (.pdf)</div>
+                    </div>
+
+                    <div class="checklist-section">
+                        <div class="checklist-section-title">File Requirements:</div>
+                        <div class="checklist-item">Maximum file size: <strong>16 MB</strong></div>
+                        <div class="checklist-item">File should contain complaint data with standard columns</div>
+                        <div class="checklist-item">Column names are auto-detected (case-insensitive)</div>
+                    </div>
+
+                    <div class="checklist-section">
+                        <div class="checklist-section-title">What Happens After Upload:</div>
+                        <div class="checklist-item">✅ File is parsed and complaint data is extracted</div>
+                        <div class="checklist-item">✅ Data is normalized to standard NCRP format</div>
+                        <div class="checklist-item">✅ Complaints are categorized by crime type</div>
+                        <div class="checklist-item">✅ Possible duplicates are identified</div>
+                        <div class="checklist-item">✅ Excel register is generated with multiple sheets</div>
+                    </div>
+                </div>
+
+                <!-- Right Panel - Upload Form -->
+                <div class="form-panel">
+                    <h3 class="form-title">📁 Upload Complaint Files</h3>
+                    
+                    <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="file" class="form-label">
+                                Select File <span class="required">*</span>
+                            </label>
+                            <input type="file" class="form-control" id="file" name="file" 
+                                   accept=".csv,.xlsx,.xls,.pdf" required>
+                            <div class="form-text">
+                                Supported formats: CSV, Excel (.xlsx, .xls), PDF
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary w-100">
+                                📤 Upload and Process
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="form-group">
+                        <a href="{{ url_for('download_excel') }}" class="btn btn-success w-100">
+                            📥 Download Master Register (Excel)
+                        </a>
+                    </div>
+
+                    <div class="form-group">
+                        <a href="{{ url_for('checklist') }}" class="btn btn-outline-primary w-100">
+                            📋 View Checklist for Complainant
+                        </a>
+                    </div>
+
+                    <div class="form-group">
+                        <a href="{{ url_for('complaint_form') }}" class="btn btn-outline-primary w-100">
+                            📝 Submit Sample Complaint (Demo)
+                        </a>
+                    </div>
+
+                    <div class="form-group">
+                        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-primary w-100">
+                            📊 View Dashboard & Statistics
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container-fluid">
+            <p>National Cyber Crime Reporting Portal - Local Demonstration System | Not connected to real NCRP portal</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

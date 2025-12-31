@@ -1,0 +1,12 @@
+Complaint ID,Complaint Date,Complainant Name,Mobile,Email,District,Crime Type,Platform,Amount,Status
+COMP001,2024-01-15,John Doe,9876543210,john@example.com,Coimbatore,UPI Fraud,UPI,25000,Registered
+COMP002,2024-01-16,Jane Smith,9876543211,jane@example.com,Nilgiris,Bank Fraud,Bank,75000,Under Enquiry
+COMP003,2024-01-17,Bob Johnson,9876543212,bob@example.com,Coimbatore,Social Media,Social Media,5000,Registered
+COMP004,2024-01-18,Alice Brown,9876543213,alice@example.com,Nilgiris,Harassment,Social Media,0,Registered
+COMP005,2024-01-19,Charlie Wilson,9876543214,charlie@example.com,Coimbatore,UPI Fraud,UPI,30000,FIR Filed
+COMP006,2024-01-20,Diana Prince,9876543215,diana@example.com,Nilgiris,Job Scam,Email,15000,Under Enquiry
+COMP007,2024-01-21,Edward Lee,9876543216,edward@example.com,Coimbatore,OTP Fraud,OTP,20000,Registered
+COMP008,2024-01-22,Fiona Green,9876543217,fiona@example.com,Nilgiris,Online Shopping,Other,12000,Closed
+COMP009,2024-01-23,George Black,9876543218,george@example.com,Coimbatore,UPI Fraud,UPI,25000,Registered
+COMP010,2024-01-24,Helen White,9876543219,helen@example.com,Nilgiris,Bank Fraud,Bank,100000,Under Enquiry
+

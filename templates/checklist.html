@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist for Complainant - National Cyber Crime Reporting Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .checklist-main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .checklist-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            padding: 30px;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+            margin-bottom: 0;
+        }
+        
+        .checklist-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .checklist-header p {
+            font-size: 16px;
+            margin: 0;
+            opacity: 0.95;
+        }
+        
+        .checklist-content {
+            background: #fff;
+            padding: 40px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .checklist-intro {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        
+        .checklist-intro strong {
+            color: #856404;
+            font-size: 16px;
+        }
+        
+        .mandatory-section {
+            background: #f8f9fa;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .optional-section {
+            background: #f8f9fa;
+            border: 2px solid #17a2b8;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid;
+        }
+        
+        .mandatory-section .section-title {
+            color: #dc3545;
+            border-bottom-color: #dc3545;
+        }
+        
+        .optional-section .section-title {
+            color: #17a2b8;
+            border-bottom-color: #17a2b8;
+        }
+        
+        .checklist-item-box {
+            background: #fff;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .checklist-item-number {
+            display: inline-block;
+            background: #28a745;
+            color: #fff;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: 700;
+            margin-right: 15px;
+            font-size: 16px;
+        }
+        
+        .checklist-item-text {
+            display: inline-block;
+            vertical-align: top;
+            width: calc(100% - 60px);
+            font-size: 15px;
+            line-height: 1.7;
+            color: #333;
+        }
+        
+        .checklist-item-text strong {
+            color: #1e3c72;
+            font-weight: 600;
+        }
+        
+        .sub-items {
+            margin-top: 15px;
+            margin-left: 50px;
+            padding-left: 20px;
+            border-left: 2px solid #e0e0e0;
+        }
+        
+        .sub-item {
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .sub-item::before {
+            content: "→";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .file-format-note {
+            background: #e7f3ff;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #0c5460;
+        }
+        
+        .action-buttons {
+            margin-top: 40px;
+            text-align: center;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        .btn-checklist {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 10px 10px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .btn-checklist-primary {
+            background: #28a745;
+            color: #fff;
+        }
+        
+        .btn-checklist-primary:hover {
+            background: #218838;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .btn-checklist-outline {
+            background: transparent;
+            border: 2px solid #2a5298;
+            color: #2a5298;
+        }
+        
+        .btn-checklist-outline:hover {
+            background: #2a5298;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .important-note {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .important-note h4 {
+            color: #856404;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .important-note ul {
+            margin: 0;
+            padding-left: 25px;
+        }
+        
+        .important-note li {
+            margin-bottom: 10px;
+            color: #856404;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .checklist-content {
+                padding: 25px 20px;
+            }
+            
+            .checklist-header h1 {
+                font-size: 22px;
+            }
+            
+            .checklist-item-text {
+                width: calc(100% - 50px);
+                font-size: 14px;
+            }
+            
+            .sub-items {
+                margin-left: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb-section">
+                <a href="{{ url_for('index') }}">Home</a> > Checklist for Complainant
+            </div>
+
+            <div class="checklist-main-container">
+                <!-- Header -->
+                <div class="checklist-header">
+                    <h1>📋 CHECKLIST FOR COMPLAINANT</h1>
+                    <p>Please keep this information ready before filing your complaint</p>
+                </div>
+
+                <!-- Main Content -->
+                <div class="checklist-content">
+                    <!-- Introduction -->
+                    <div class="checklist-intro">
+                        <strong>⚠️ IMPORTANT:</strong> Before proceeding to file your complaint, please ensure you have all the mandatory information and documents ready. This will help in faster processing of your complaint.
+                    </div>
+
+                    <!-- Mandatory Information Section -->
+                    <div class="mandatory-section">
+                        <div class="section-title">
+                            <span style="color: #dc3545;">🔴</span> Mandatory Information
+                        </div>
+
+                        <div class="checklist-item-box">
+                            <span class="checklist-item-number">1</span>
+                            <div class="checklist-item-text">
+                                <strong>Incident Date and Time</strong>
+                                <div class="file-format-note">
+                                    Please note the exact date and time when the cybercrime incident occurred. This information is crucial for investigation.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="checklist-item-box">
+                            <span class="checklist-item-number">2</span>
+                            <div class="checklist-item-text">
+                                <strong>Incident Details</strong>
+                                <div class="file-format-note">
+                                    Minimum 200 characters required. <strong>Important:</strong> Do not use any special characters such as # $ @ ^ * ` ' " ~ | ! in your description.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="checklist-item-box">
+                            <span class="checklist-item-number">3</span>
+                            <div class="checklist-item-text">
+                                <strong>Soft Copy of National ID</strong>
+                                <div class="file-format-note">
+                                    <strong>Accepted Documents:</strong> Voter ID, Driving License, Passport, PAN Card, Aadhaar Card<br>
+                                    <strong>Accepted Formats:</strong> .jpeg, .jpg, .png<br>
+                                    <strong>Maximum File Size:</strong> 5 MB
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="checklist-item-box">
+                            <span class="checklist-item-number">4</span>
+                            <div class="checklist-item-text">
+                                <strong>Financial Fraud Information</strong>
+                                <div style="margin-top: 10px; color: #dc3545; font-weight: 600;">
+                                    In case of financial fraud, please keep following information ready:
+                                </div>
+                                <div class="sub-items">
+                                    <div class="sub-item">Name of the Bank/ Wallet/ Merchant</div>
+                                    <div class="sub-item">12-digit Transaction ID/ UTR No.</div>
+                                    <div class="sub-item">Date of transaction</div>
+                                    <div class="sub-item">Fraud amount</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="checklist-item-box">
+                            <span class="checklist-item-number">5</span>
+                            <div class="checklist-item-text">
+                                <strong>Relevant Evidence Documents</strong>
+                                <div class="file-format-note">
+                                    Soft copy of all relevant evidences related to the cyber crime.<br>
+                                    <strong>Maximum File Size per Document:</strong> 10 MB
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Optional Information Section -->
+                    <div class="optional-section">
+                        <div class="section-title">
+                            <span style="color: #17a2b8;">ℹ️</span> Optional/Desirable Information
+                        </div>
+
+                        <div class="checklist-item-box">
+                            <span class="checklist-item-number">1</span>
+                            <div class="checklist-item-text">
+                                <strong>Suspected Website URLs/ Social Media Handles</strong>
+                                <div class="file-format-note">
+                                    Provide URLs or social media handles wherever applicable. This information can help in investigation.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="checklist-item-box">
+                            <span class="checklist-item-number">2</span>
+                            <div class="checklist-item-text">
+                                <strong>Suspect Details</strong>
+                                <div style="margin-top: 10px; color: #17a2b8; font-weight: 600;">
+                                    If available, please provide the following suspect details:
+                                </div>
+                                <div class="sub-items">
+                                    <div class="sub-item">Mobile No</div>
+                                    <div class="sub-item">Email ID</div>
+                                    <div class="sub-item">Bank Account No</div>
+                                    <div class="sub-item">Address</div>
+                                    <div class="sub-item">Soft copy of photograph of suspect in .jpeg, .jpg, .png format (not more than 5 MB)</div>
+                                    <div class="sub-item">Any other document through which suspect can be identified</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Important Notes -->
+                    <div class="important-note">
+                        <h4>📌 Important Notes:</h4>
+                        <ul>
+                            <li>Ensure all documents are clear and readable before uploading</li>
+                            <li>File names should be descriptive and without special characters</li>
+                            <li>Keep backup copies of all documents you upload</li>
+                            <li>Do not share your complaint details or documents with unauthorized persons</li>
+                            <li>For any assistance, contact the helpline or visit your nearest police station</li>
+                        </ul>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <a href="{{ url_for('complaint_form') }}" class="btn-checklist btn-checklist-primary">
+                            📝 Proceed to File Complaint
+                        </a>
+                        <a href="{{ url_for('index') }}" class="btn-checklist btn-checklist-outline">
+                            🏠 Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container-fluid">
+            <p>National Cyber Crime Reporting Portal - Local Demonstration System | Not connected to real NCRP portal</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,78 @@
+<!-- NCRP Portal Header -->
+<div class="ncrp-header">
+    <!-- Top Blue Banner -->
+    <div class="header-top-banner">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 text-white py-2">
+                    <strong>भारत सरकार</strong> | <strong>GOVERNMENT OF INDIA</strong>
+                </div>
+                <div class="col-md-6 text-white text-end py-2">
+                    <strong>गृह मंत्रालय</strong> | <strong>MINISTRY OF HOME AFFAIRS</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Middle White Section with Logo and Title -->
+    <div class="header-middle">
+        <div class="container-fluid">
+            <div class="row align-items-center py-3">
+                <div class="col-md-3 text-center">
+                    <div class="emblem-section">
+                        <div class="emblem-placeholder">🇮🇳</div>
+                        <div class="emblem-text">सत्यमेव जयते</div>
+                        <div class="logo-text">I4C</div>
+                        <div class="logo-motto">सहवीर्य करवावहै<br>Working Together With Vigour</div>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center">
+                    <h1 class="portal-title-hindi">राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल</h1>
+                    <h2 class="portal-title-english">National Cyber Crime Reporting Portal</h2>
+                </div>
+                <div class="col-md-3 text-end">
+                    <select class="form-select form-select-sm language-select">
+                        <option>Language</option>
+                        <option>English</option>
+                        <option>हिंदी</option>
+                    </select>
+                    <div class="social-icons mt-2">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">📷</a>
+                        <a href="#" class="social-link">💼</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="header-navbar">
+        <div class="container-fluid">
+            <nav class="navbar-nav d-flex flex-row">
+                <a class="nav-link-item" href="{{ url_for('index') }}">
+                    <span class="nav-icon">🏠</span> Home
+                </a>
+                <a class="nav-link-item" href="{{ url_for('checklist') }}">
+                    <span class="nav-icon">📋</span> Checklist
+                </a>
+                <a class="nav-link-item" href="{{ url_for('complaint_form') }}">
+                    <span class="nav-icon">📝</span> Register a Complaint
+                </a>
+                <a class="nav-link-item" href="{{ url_for('admin_dashboard') }}">
+                    <span class="nav-icon">📊</span> Track Complaint
+                </a>
+                <a class="nav-link-item" href="{{ url_for('index') }}">
+                    <span class="nav-icon">📁</span> Upload Files
+                </a>
+                <a class="nav-link-item" href="#">
+                    <span class="nav-icon">📚</span> Learning Corner
+                </a>
+                <a class="nav-link-item" href="#">
+                    <span class="nav-icon">📞</span> Contact Us
+                </a>
+            </nav>
+        </div>
+    </div>
+</div>
+

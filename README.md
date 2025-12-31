@@ -2,7 +2,7 @@
 
 A local web-based tool that converts raw NCRP complaint files into searchable, categorized, and duplicate-aware Excel registers, making it easier for police officers to find, track, and manage complaints.
 
-## ⚠️ Important Disclaimer
+## ⚠️ Disclaimer
 
 **This system is NOT a replacement for the real NCRP portal.**
 - It does NOT access or scrape any government website
